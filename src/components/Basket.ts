@@ -1,6 +1,6 @@
 import { createElement, ensureElement } from '../utils/utils';
 import { EventEmitter } from './base/events';
-import { Component } from './Component';
+import { Component } from './base/Component';
 
 interface IBasketView {
 	items: HTMLElement[];
@@ -30,14 +30,14 @@ export class Basket extends Component<IBasketView> {
 	set items(items: HTMLElement[]) {
 		if (items.length) {
 			this._list.replaceChildren(...items);
-			this._button.disabled = false;
+			this.setDisabled(this._button, false);
 		} else {
 			this._list.replaceChildren(
 				createElement<HTMLParagraphElement>('p', {
 					textContent: 'Корзина пуста',
 				})
 			);
-			this._button.disabled = true;
+			this.setDisabled(this._button, true);
 		}
 	}
 

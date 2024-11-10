@@ -30,12 +30,12 @@ export class Order extends Form<IOrderForm> {
 		});
 	}
 
-	buttonSelect(name: string) {
+	selectButton(name: string) {
 		this._paymentButtons.forEach((button) => {
 			if (button.name === name) {
-				button.classList.add('button_alt-active');
+				this.toggleClass(button, 'button_alt-active', true);
 			} else {
-				button.classList.remove('button_alt-active');
+				this.toggleClass(button, 'button_alt-active', false);
 			}
 		});
 	}

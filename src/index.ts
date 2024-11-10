@@ -65,7 +65,7 @@ events.on('preview:changed', (item: Card) => {
 		onClick: () => events.emit('basket:add', item),
 	});
 
-	card.buttonDisabled(appData.basket, item.id, item.price);
+	card.disableButton(appData.basket, item.id, item.price);
 
 	modal.render({
 		content: card.render(item),
@@ -87,15 +87,16 @@ events.on('basket:remove', (item: Product) => {
 events.on('basket:changed', () => {
 	page.counter = appData.getCounter();
 	basket.total = appData.getTotal();
-	basket.items = appData.basket.map((item, index) => {
+	basket.items = appData.basket.map((item) => {
+		const index = appData.getCardIndex(item);
 		const card = new Card(cloneTemplate(cardBasketTemplate), {
 			onClick: () => events.emit('basket:remove', item),
 		});
-
+		
 		return card.render({
 			title: item.title,
 			price: item.price,
-			index: index + 1,
+			index: index,
 		});
 	});
 });
@@ -121,7 +122,7 @@ events.on('order:open', () => {
 
 //Изменился способ оплаты
 events.on('payment:change', (paymentButton: HTMLButtonElement) => {
-	order.buttonSelect(paymentButton.name);
+	order.selectButton(paymentButton.name);
 	appData.order.payment = paymentButton.name;
 });
 
@@ -203,6 +204,16 @@ events.on('contacts:submit', () => {
 		.catch((err) => {
 			console.error(err);
 		});
+});
+
+// Блокируем прокрутку страницы если открыта модалка
+events.on('modal:open', () => {
+	page.locked = true;
+});
+
+// ... и разблокируем
+events.on('modal:close', () => {
+	page.locked = false;
 });
 
 // Получаем товары с сервера

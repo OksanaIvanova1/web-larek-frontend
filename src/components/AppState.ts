@@ -1,6 +1,6 @@
 import { IContactsForm, IOrder, IOrderForm, IProduct } from '../types';
 import { Card } from './Card';
-import { Model } from './Model';
+import { Model } from './base/Model';
 
 export interface IAppState {
 	catalog: IProduct[];

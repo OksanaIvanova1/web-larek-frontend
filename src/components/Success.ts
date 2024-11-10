@@ -1,5 +1,5 @@
 import { ensureElement } from '../utils/utils';
-import { Component } from './Component';
+import { Component } from './base/Component';
 
 interface ISuccess {
 	total: number;
@@ -31,6 +31,6 @@ export class Success extends Component<ISuccess> {
 	}
 
 	set total(value: number) {
-		this._total.textContent = `Списано ${value} синапсов`;
+		this.setText(this._total, `Списано ${value} синапсов`);
 	}
 }

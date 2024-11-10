@@ -1,6 +1,6 @@
 import { Product } from './AppState';
 import { IEvents } from './base/events';
-import { Component } from './Component';
+import { Component } from './base/Component';
 
 const categoryClasses: { [key: string]: string } = {
 	'софт-скил': 'card__category_soft',
@@ -63,7 +63,7 @@ export class Card extends Component<ICard> {
 
 	set category(value: string) {
 		this.setText(this._category, value);
-		this._category.classList.add(categoryClasses[value]);
+		this.toggleClass(this._category, categoryClasses[value], true);
 	}
 
 	set description(value: string) {
@@ -78,7 +78,11 @@ export class Card extends Component<ICard> {
 		this.setImage(this._image, value, this.title);
 	}
 
-	buttonDisabled(items: Product[], id: string, price: number | null) {
+	set index(value: number) {
+		this.setText(this._index, value);
+	}
+
+	disableButton(items: Product[], id: string, price: number | null) {
 		let itemsID = items.map((item) => item.id);
 		if (itemsID.includes(id) || price === null) {
 			this.setDisabled(this._button, true);

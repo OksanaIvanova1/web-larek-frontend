@@ -30,6 +30,7 @@ export interface IShopAPI {
 export interface IPage {
 	counter: number;
 	catalog: HTMLElement[];
+	locked: boolean;
 }
 
 export interface IModal {
